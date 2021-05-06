@@ -33,7 +33,7 @@ class DinoGame:
     loop_callback = Callback()
     gameover_callback = Callback()
 
-    def __init__(self, fps: int = 60):
+    def __init__(self, fps: int = 60, render=True):
         pygame.init()
 
         pygame.surfarray.use_arraytype("numpy")
@@ -63,7 +63,8 @@ class DinoGame:
         self._last_flyer_spawn = 0
 
         self._ground = Ground(self.GROUND_POSITION)
-        self._decorations = Decorations(self.WIDTH, (10, self.GROUND_POSITION - 20), 0.005)
+        self._decorations = Decorations(
+            self.WIDTH, (10, self.GROUND_POSITION - 20), 0.005)
         self._obstacles = Obstacles(self.WIDTH)
 
         self._player = Player((20, self.GROUND_POSITION + 10))
@@ -92,6 +93,30 @@ class DinoGame:
         self._load = self._tt.toc() * self._fps
 
         _LOGGER.debug("load {:0.4f}".format(self.load))
+
+    def _ai_loop(self, action):
+        self._clock.tick(self._fps)
+        self._tt.tic()
+        self.loop_callback.on(self)
+
+        # Execute action
+        if action == 0:
+            pass
+        elif action == 1:
+            self._player.jump()
+        elif action == 2:
+            self._player.crouch()
+        elif action == 3:
+            self._player.stand_up()
+
+        if self.is_alive and self.is_running:
+            self._update_state()
+            self._check_collision()
+
+        self._load = self._tt.toc() * self._fps
+        _LOGGER.debug("load {:0.4f}".format(self.load))
+
+        return not self.is_alive
 
     def _handle_events(self):
         for event in pygame.event.get():
@@ -149,7 +174,8 @@ class DinoGame:
         self._obstacles.draw(self._screen)
         self._entities.draw(self._screen)
 
-        self._screen.blit(self._font.render("SCORE {0:08d}".format(self.score), True, (0, 0, 0)), (470, 10))
+        self._screen.blit(self._font.render(
+            "SCORE {0:08d}".format(self.score), True, (0, 0, 0)), (470, 10))
 
         pygame.display.update()
 
@@ -201,7 +227,7 @@ class DinoGame:
         start_delay = -5
 
         p = max_speed * (1 - math.exp(-exp_speed * (self.time_alive - start_delay))) * (
-                1 - math.exp(-spawn_reset * (self.time_alive - self._last_cactus_spawn)))
+            1 - math.exp(-spawn_reset * (self.time_alive - self._last_cactus_spawn)))
         return max(0, min(1, p))
 
     @property
@@ -212,7 +238,7 @@ class DinoGame:
         start_delay = 20
 
         p = max_speed * (1 - math.exp(-exp_speed * (self.time_alive - start_delay))) * (
-                1 - math.exp(-spawn_reset * (self.time_alive - self._last_flyer_spawn)))
+            1 - math.exp(-spawn_reset * (self.time_alive - self._last_flyer_spawn)))
         return max(0, min(1, p))
 
     @property
