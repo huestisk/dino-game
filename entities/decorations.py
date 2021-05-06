@@ -30,7 +30,7 @@ class Decorations(pygame.sprite.Group):
 
 
 class Cloud(MovingObject):
-    _SPRITE_FILE = "../../assets/cloud.png"
+    _SPRITE_FILE = "../assets/cloud.png"
 
     def __init__(self, position: Tuple[float, float]):
         super(Cloud, self).__init__()

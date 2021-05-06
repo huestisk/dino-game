@@ -4,7 +4,7 @@ import pygame
 
 from .moving_object import MovingObject
 
-_GROUND_FILE = "../../assets/ground.png"
+_GROUND_FILE = "../assets/ground.png"
 _COLOR_KEY = (0, 0, 0)
 
 

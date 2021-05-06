@@ -41,7 +41,7 @@ class Obstacle(MovingObject):
 
 
 class Flyer(Obstacle):
-    _SPRITE_FILE = "../../assets/flyer.png"
+    _SPRITE_FILE = "../assets/flyer.png"
     _VERTICAL_SPAWN = []
 
     def __init__(self):
@@ -75,7 +75,7 @@ class Flyer(Obstacle):
 
 
 class Cactus(Obstacle):
-    _SPRITE_FILE = "../../assets/cactus.png"
+    _SPRITE_FILE = "../assets/cactus.png"
     _SPRITES = []
 
     _GROUND_POSITION: int

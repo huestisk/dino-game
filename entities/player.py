@@ -9,7 +9,7 @@ _COLOR_KEY = (0, 0, 0)
 
 
 class Player(pygame.sprite.Sprite):
-    _SPRITE_FILE = "../../assets/player.png"
+    _SPRITE_FILE = "../assets/player.png"
 
     class State(Enum):
         STILL = 0

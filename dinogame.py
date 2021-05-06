@@ -5,9 +5,9 @@ import time
 
 import pygame
 
-from .entities import Decorations, Ground, Player, Obstacles, Flyer, Cactus
-from ..callback import Callback
-from ..tictoc import TicToc
+from entities import Decorations, Ground, Player, Obstacles, Flyer, Cactus
+from callback import Callback
+from tictoc import TicToc
 
 _LOGGER = logging.getLogger(__package__)
 
@@ -218,3 +218,9 @@ class DinoGame:
     @property
     def frame(self) -> "numpy.ndarray":
         return pygame.surfarray.array3d(self._screen)
+
+
+if __name__ == "__main__":
+
+    game = DinoGame()
+    game.start()
