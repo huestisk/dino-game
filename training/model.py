@@ -39,7 +39,7 @@ class CnnDQN(nn.Module):
     def feature_size(self):
         return self.features(Variable(torch.zeros(1, *self.input_shape))).view(1, -1).size(1)
 
-    def act(self, state, epsilon):
+    def act(self, state, epsilon=1.0):
         if random.random() > epsilon:
             state = Variable(torch.FloatTensor(np.float32(state)).unsqueeze(0))
             q_value = self.forward(state)

@@ -224,7 +224,7 @@ class DinoGame:
         max_speed = 0.10
         exp_speed = 0.01
         spawn_reset = 0.2
-        start_delay = -5
+        start_delay = -15
 
         p = max_speed * (1 - math.exp(-exp_speed * (self.time_alive - start_delay))) * (
             1 - math.exp(-spawn_reset * (self.time_alive - self._last_cactus_spawn)))
