@@ -9,7 +9,7 @@ from training.train import Trainer
 USE_CUDA = torch.cuda.is_available()
 def Variable(x): return x.cuda() if USE_CUDA else x
 
-## From https://github.com/higgsfield/RL-Adventure/blob/master/common/wrappers.py
+## From https://github.com/higgsfield/RL-Adventure/blob/master
 class ReplayBuffer(object):
     def __init__(self, capacity):
         self.buffer = deque(maxlen=capacity)
