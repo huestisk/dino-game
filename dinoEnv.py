@@ -46,6 +46,8 @@ class DinoEnv(gym.Env):
         # Get image in pygame and convert
         img = s.array3d(self.game._screen).swapaxes(0,1)
         full_img = img.copy() if show else None
+        cv2.imshow('',img)
+        cv2.waitKey(1)
         img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         img = cv2.resize(img, (WIDTH, HEIGHT), interpolation = cv2.INTER_AREA)
         img = np.expand_dims(img.swapaxes(0,1), axis=0)

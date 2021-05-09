@@ -25,7 +25,7 @@ class CnnDQN(nn.Module):
         )
 
         self.fc = nn.Sequential(
-            nn.Linear(self.feature_size(), 512),
+            nn.Linear(2688, 512),
             nn.ReLU(),
             nn.Linear(512, self.num_actions)
         )
@@ -40,10 +40,18 @@ class CnnDQN(nn.Module):
         return self.features(Variable(torch.zeros(1, *self.input_shape))).view(1, -1).size(1)
 
     def act(self, state, epsilon=1.0):
-        if random.random() > epsilon:
+        rand = random.random()
+        if rand > epsilon:
             state = Variable(torch.FloatTensor(np.float32(state)).unsqueeze(0))
             q_value = self.forward(state)
             action = q_value.max(1)[1].data[0]
+        elif rand > epsilon * 0.5:
+            action = 0      # nothing
+        elif rand > epsilon * 0.2:
+            action = 1      # jump
+        elif rand > epsilon * 0.1:
+            action = 2      # crouch
         else:
-            action = random.randrange(self.num_actions)
+            action = 3      # stand up
+
         return action

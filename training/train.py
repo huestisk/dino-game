@@ -80,9 +80,14 @@ class Trainer():
         plt.plot(losses)
         plt.show()
 
+    # def epsilon_by_frame(self, frame_idx):
+    #     decay = math.exp(-1. * frame_idx / self.epsilon_decay)
+    #     return self.epsilon_final + (self.epsilon_start - self.epsilon_final) * decay
+
     def epsilon_by_frame(self, frame_idx):
-        decay = math.exp(-1. * frame_idx / self.epsilon_decay)
-        return self.epsilon_final + (self.epsilon_start - self.epsilon_final) * decay
+        m = (self.epsilon_final - self.epsilon_start) / self.epsilon_decay
+        epsilon_linear = self.epsilon_start + m * frame_idx
+        return max(epsilon_linear, self.epsilon_final)
 
     def train(self):
         # Variables
@@ -111,7 +116,7 @@ class Trainer():
             else:
                 state = next_state
             # Train
-            if frame_idx > self.batch_size * 4: # int(self.buffersize / 2):
+            if frame_idx > int(self.buffersize / 2):
                 loss = self.compute_td_loss(self.batch_size, frame_idx)
                 losses.append(loss.data.item())
             # Update Target
